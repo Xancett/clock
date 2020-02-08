@@ -1,9 +1,10 @@
 // Set times for events: wake up, sleep, lunch, party
 // Set party button (changes to end party)
-var age = 'adult';
+var age = 'baby';
 var activity = document.getElementById('activity');
 var time = document.getElementById('time');
 var adultImage = document.getElementById('image');
+var ageButton = document.getElementById('AgeButton');
 
 // Displays the clock
 function displayClock() {
@@ -24,15 +25,33 @@ function prettyTime(time) {
     return time.toString();
 }
 
+// Changes the main image based on the selected value of the drop down and the current age selection
 function changeImage() {
-    if (age === 'adult') {
-        adultImage.src='images/adult/cuddle.png';
-        alert(activity);
-    } else {
-
-    }
+    let myActivity = activity.options[activity.selectedIndex].value;
+    adultImage.src='images/' + age.toString() + '/' + myActivity.toString() + '.png';
 }
 
+// Changes the current age selection
+function changeAge() {
+    age = (age == 'baby' ? 'adult' : 'baby');
+    // Change image
+    changeImage();
+    // Change text of the button
+    if (age == 'baby') {
+        ageButton.innerHTML = 'Click to see me as an adult'
+    } else {
+        ageButton.innerHTML = 'Click to see me as a baby';
+    }
+    
+}
 
 displayClock();
 changeImage();
+
+// Event listener
+ageButton.addEventListener('click', () => {
+    changeAge();
+})
+activity.addEventListener('click', () => {
+    changeImage();
+})
